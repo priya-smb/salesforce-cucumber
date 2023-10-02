@@ -1,9 +1,10 @@
-package com.sf;
+package com.sf.stepdefs;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import constants.FileConstants;
+import com.sf.constants.FileConstants;
+import com.sf.pages.LoginPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -13,29 +14,18 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
+import com.sf.utils.ConfigUtil;
+import com.sf.utils.FileUtils;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Properties;
 
-//import com.salesforce.constants.FileConstants;
-//import com.salesforce.pages.LoginPage;
-//import com.salesforce.utils.ConfigUtil;
-//import com.salesforce.utils.FileUtils;
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
-import utils.ConfigUtil;
-import utils.FileUtils;
-
 
 //@Listeners({com.sf.TestListener.class})
-public class BaseTest {
-    protected static Logger logger = LogManager.getLogger(BaseTest.class);
+public class BaseStepDefinition {
+    protected static Logger logger = LogManager.getLogger(BaseStepDefinition.class);
 
     private static ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
 
@@ -53,7 +43,7 @@ public class BaseTest {
         return driver;
     }
 
-    @BeforeTest
+
     public static void setConfig() {
         logger.info("---- Set configurations --------");
         spark = new ExtentSparkReporter(new File(FileConstants.REPORT_PATH));
@@ -66,18 +56,17 @@ public class BaseTest {
     }
 
 
-    @BeforeMethod
-    public void setup(Method methodInfo) {
+    public void setup() {
 
-        WebDriver driver = BaseTest.getBrowserType("chrome", false);
+        WebDriver driver = BaseStepDefinition.getBrowserType("chrome", false);
         // WebDriver driver = com.sf.BaseTest.getBrowserType("firefox", false);
         threadLocalDriver.set(driver);
         logger.info("---- Driver created --------");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-
-        test = extent.createTest(methodInfo.getName());
+        setConfig();
+//        test = extent.createTest(methodInfo.getName());
     }
 
     public String getProperty(String key) {
@@ -88,8 +77,7 @@ public class BaseTest {
         return threadLocalDriver.get();
     }
 
-    @AfterMethod
-    public static void removeDriver() {
+    public void removeDriver() {
         getDriver().close();
         threadLocalDriver.remove();
         extent.flush();
@@ -144,24 +132,24 @@ public class BaseTest {
     }
 
 
-//        public LoginPage login(WebDriver driver, boolean rememberMe) {
-//            LoginPage loginPage = new LoginPage(driver);
-//            loginPage.setUsername(getProperty("username"));
-//            loginPage.setPassword(getProperty("password"));
-//            if (rememberMe) {
-//                loginPage.enableRememberMe();
-//            } else {
-//                loginPage.disableRememberMe();
-//            }
-//
-//            loginPage.submit();
-//            return loginPage;
-//
-//        }
-//
-//        public LoginPage login(WebDriver driver) {
-//
-//            return login(driver, false);
-//        }
+        public LoginPage login(WebDriver driver, boolean rememberMe) {
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.setUsername(getProperty("username"));
+            loginPage.setPassword(getProperty("password"));
+            if (rememberMe) {
+                loginPage.enableRememberMe();
+            } else {
+                loginPage.disableRememberMe();
+            }
+
+            loginPage.submit();
+            return loginPage;
+
+        }
+
+        public LoginPage login(WebDriver driver) {
+
+            return login(driver, false);
+        }
 
 }

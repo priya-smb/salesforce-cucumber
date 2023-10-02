@@ -1,5 +1,6 @@
-package stepDefinitions;
+package com.sf.stepdefs;
 
+import com.sf.pages.*;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.*;
@@ -120,8 +121,8 @@ public class StepDefinition extends BaseStepDefinition {
         Assert.assertEquals(userMenuPage.userMenuDDBtn.getText(), "Priyanka Selenium");
     }
 
-    @Then("User clicks on the user menu for <username> drop down")
-    public void user_clicks_on_the_user_menu_for_username_drop_down() {
+    @Then("user clicks on the user menu for <username> drop down")
+    public void userClicksOnTheUserMenuForUsernameDropDown() {
         selectUserNameMenu();
     }
 

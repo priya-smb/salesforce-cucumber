@@ -1,7 +1,5 @@
-package utils;
+package com.sf.utils;
 
-import constants.FileConstants;
-import constants.WaitConstants;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -14,6 +12,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
+
+import com.sf.constants.FileConstants;
+import com.sf.constants.WaitConstants;
+
 
 public class CommonUtils {
         public static String getStringDateAndTimeStamp() {

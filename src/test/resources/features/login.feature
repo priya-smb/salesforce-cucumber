@@ -42,7 +42,7 @@ Feature: salesforce
     When user checks for user menu for <username> drop down
     Then user clicks on the user menu for <username> drop down
 
-    @smoke
+  @smoke
   Scenario: Select "My Profile" option from user menu for <username> drop down
     Given user opens the login page
     When user enters valid user name

@@ -1,4 +1,4 @@
-package utils;
+package com.sf.utils;
 
 import java.io.File;
 import java.io.FileReader;

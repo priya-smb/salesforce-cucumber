@@ -1,6 +1,6 @@
-package utils;
+package com.sf.utils;
 
-import constants.FileConstants;
+import com.sf.constants.FileConstants;
 
 import java.util.Properties;
 
